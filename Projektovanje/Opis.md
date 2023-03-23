@@ -14,6 +14,7 @@
 - [A] Prikazivanje oglasa
 - [?] Razgovor sa prodavcem
 - [?] Praćenje oglasa
+- [?] Prijava oglasa
 - [?] Interfejs za administraciju
 
 
