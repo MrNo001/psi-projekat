@@ -8,13 +8,13 @@
 
 
 ### Funkcionalnosti
-- [_] Registracija i prijava
-- [_] Pretraga vozila
-- [_] Kreiranje oglasa
-- [_] Prikazivanje oglasa
-- [_] Razgovor sa prodavcem
-- [_] Praćenje oglasa
-- [_] Interfejs za administraciju
+- [N] Registracija i prijava
+- [N] Pretraga vozila
+- [A] Kreiranje oglasa
+- [A] Prikazivanje oglasa
+- [?] Razgovor sa prodavcem
+- [?] Praćenje oglasa
+- [?] Interfejs za administraciju
 
 
 ### Struktura
