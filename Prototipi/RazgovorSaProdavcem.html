@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="RazgovorSaProdavcem.css">
+	<title>Razgovor sa prodavcem prototip</title>
+</head>
+<body>
+    <header>
+        <h1>Polovna vozila</h1>
+    </header>
+	
+    <nav>
+		<ul>
+			<li><a href="#">Pocetna</a></li>
+			<li><a href="#">Oglasi</a></li>
+			<li><a href="#">Praćeni oglasi</a></li>
+			<li><a href="#">Kreiraj nalog</a></li>
+			<li><a href="#">Prijavi se</a></li>
+		</ul>
+	</nav>
+
+	<div class="ads">
+        <h2>Oglasi</h2>
+        <ul>
+            <li>
+                <div class="ad">
+                    <h3>Naslov oglasa 1</h3>
+                    <p>Ovde treba da bude opis oglasa</p>
+                    <img src="ad1.jbg" alt="Ovde treba da bude slika oglasa"/>
+				    <br>
+                    <button class="chat-button" data-seller="seller1">Razgovaraj sa prodavcem</button>
+                </div>
+            </li>
+            <li>
+                <div class="ad">
+                    <h3>Naslov oglasa 2</h3>
+                    <p>Ovde treba da bude opis oglasa</p>
+                    <img src="ad2.jbg" alt="Ovde treba da bude slika oglasa"/>
+				    <br>
+                    <button class="chat-button" data-seller="seller2">Razgovaraj sa prodavcem</button>
+                </div>
+            </li>
+			<li>
+                <div class="ad">
+                    <h3>Naslov oglasa 3</h3>
+                    <p>Ovde treba da bude opis oglasa</p>
+                    <img src="ad3.jbg" alt="Ovde treba da bude slika oglasa"/>
+				    <br>
+                    <button class="chat-button" data-seller="seller3">Razgovaraj sa prodavcem</button>
+                </div>
+            </li>
+        </ul>
+	</div>
+
+	<div class="chat-window">
+		<div class="chat-header">
+			<h2>Razgovor sa prodavcem</h2>
+			<button class="close-button">Zatvori</button>
+		</div>
+
+		<div class="chat-messages">
+			<p>Prodavac: Zdravo!</p>
+			<p>Kupac: Zdravo, zainteresovan sam za vaš proizvod.</p>
+		</div>
+
+		<div class="chat-input">
+			<input type="text" placeholder="Ovde pišite vašu poruku...">
+			<button class="send-button">Pošalji</button>
+		</div>
+	</div>
+
+	<script>
+		const chatButtons = document.querySelectorAll('.chat-button');
+		chatButtons.forEach(button => {
+			button.addEventListener('click', () => {
+				const chatWindow = document.querySelector('.chat-window');
+				chatWindow.style.display = 'block';
+
+				const sellerId = button.getAttribute('data-seller');
+
+				sendNotification(sellerId);
+			});
+		});
+
+		const closeButton = document.querySelector('.close-button');
+		closeButton.addEventListener('click', () => {
+			const chatWindow = document.querySelector('.chat-window');
+			chatWindow.style.display = 'none';
+		});
+
+		function sendNotification(sellerId) {
+			console.log(`Notification sent to seller ${sellerId}`);
+		}
+	</script>
+</body>
+</html>
