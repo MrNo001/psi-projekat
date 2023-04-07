@@ -4,58 +4,54 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="FollowAds.css">
-	<title>Follow Ads Prototype</title>
+	<link rel="stylesheet" type="text/css" href="PracenjeOglasa.css">
+	<title>Praćenje oglasa prototip</title>
 </head>
 <body>
 	<header>
-		<h1>Used Cars for Sale</h1>
+		<h1>Polovna vozila</h1>
 	</header>
 
 	<nav>
 		<ul>
-			<li><a href="#">Home</a></li>
-			<li><a href="#">Ads</a></li>
-			<li><a href="#">Followed Ads</a></li>
-			<li><a href="#">Register</a></li>
-			<li><a href="#">Login</a></li>
+			<li><a href="#">Pocetna</a></li>
+			<li><a href="#">Oglasi</a></li>
+			<li><a href="#">Praćeni oglasi</a></li>
+			<li><a href="#">Kreiraj nalog</a></li>
+			<li><a href="#">Prijavi se</a></li>
 		</ul>
 	</nav>
 
 	<main>
-		<h2>Ads</h2>
+		<h2>Oglasi</h2>
 		<ul>
 			<li>
-				<h3>Ad Title 1</h3>
-				<p>Ad description goes here</p>
-				<img src="ad1.jbg" alt="Ad image goes here"/>
+				<h3>Naslov oglasa 1</h3>
+				<p>Ovde treba da bude opis oglasa</p>
+				<img src="ad1.jbg" alt="Ovde treba da bude slika oglasa"/>
 				<br>
-				<button class="follow-button">Follow</button>
+				<button class="follow-button">Prati</button>
 			</li>
 			<li>
-				<h3>Ad Title 2</h3>
-				<p>Ad description goes here</p>
-				<img src="ad2.jbg" alt="Ad image goes here"/>
+				<h3>Naslov oglasa 2</h3>
+				<p>Ovde treba da bude opis oglasa</p>
+				<img src="ad2.jbg" alt="Ovde treba da bude slika oglasa"/>
 				<br>
-				<button class="follow-button">Follow</button>
+				<button class="follow-button">Prati</button>
 			</li>
 			<li>
-				<h3>Ad Title 3</h3>
-				<p>Ad description goes here</p>
-				<img src="ad3.jbg" alt="Ad image goes here"/>
+				<h3>Naslov oglasa 3</h3>
+				<p>Ovde treba da bude opis oglasa</p>
+				<img src="ad3.jbg" alt="Ovde treba da bude slika oglasa"/>
 				<br>
-				<button class="follow-button">Follow</button>
+				<button class="follow-button">Prati</button>
 			</li>
 		</ul>
 
-		<h2>Followed Ads</h2>
+		<h2>Praćeni oglasi</h2>
 		<ul id="followed-ads-list">
 		</ul>
 	</main>
-
-	<footer>
-		<p>Copyright © 2023</p>
-	</footer>
 
 	<script>
 		function followButtonClicked(event) {
@@ -63,7 +59,7 @@
 			const followedAdsList = document.getElementById('followed-ads-list');
 
 			if (followedAdsList.querySelector(`li[data-title="${adTitle}"]`)) {
-				alert('You are already following this ad!');
+				alert('Već pratite ovaj oglas!');
 				return;
 			}
 
@@ -73,7 +69,7 @@
 
 			followedAdsList.appendChild(newListItem);
 
-			alert(`You are now following "${adTitle}"!`);
+			alert(`Zapratili ste "${adTitle}"!`);
 		}
 
 		const followButtons = document.querySelectorAll('.follow-button');
