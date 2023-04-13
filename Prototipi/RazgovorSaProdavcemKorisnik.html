@@ -14,24 +14,29 @@
 	
     <nav>
 		<ul>
-			<li><a href="#">Pocetna</a></li>
-			<li><a href="#">Oglasi</a></li>
-			<li><a href="#">Praćeni oglasi</a></li>
-			<li><a href="#">Kreiraj nalog</a></li>
-			<li><a href="#">Prijavi se</a></li>
+			<li><a href="Pocetna.html">Pocetna</a></li>
+			<li><a href="prikaz_oglasa.html">Oglasi</a></li>
+			<li><a href="RazgovorSaProdavcemGost.html">Odjavi se</a></li>
 		</ul>
 	</nav>
 
 	<div class="ads">
         <h2>Oglasi</h2>
+        <form id="ads-form">
+            <label for="model-input">Model vozila:</label>
+            <input type="text" id="model-input" name="model" placeholder="Honda Civic" required>
+            <button type="submit" class="submit-button">Pronađi oglase</button>
+        </form>
+        <br>
         <ul>
             <li>
                 <div class="ad">
-                    <h3>Naslov oglasa 1</h3>
+                    <a href="prikaz_oglasa.html"><h3>2018 Honda Civic</h3></a>
                     <p>Ovde treba da bude opis oglasa</p>
                     <img src="ad1.jbg" alt="Ovde treba da bude slika oglasa"/>
 				    <br>
                     <button class="chat-button" data-seller="seller1">Razgovaraj sa prodavcem</button>
+                    <button class="follow-button">Prati</button>
                 </div>
             </li>
             <li>
@@ -41,6 +46,7 @@
                     <img src="ad2.jbg" alt="Ovde treba da bude slika oglasa"/>
 				    <br>
                     <button class="chat-button" data-seller="seller2">Razgovaraj sa prodavcem</button>
+                    <button class="follow-button">Prati</button>
                 </div>
             </li>
 			<li>
@@ -50,12 +56,13 @@
                     <img src="ad3.jbg" alt="Ovde treba da bude slika oglasa"/>
 				    <br>
                     <button class="chat-button" data-seller="seller3">Razgovaraj sa prodavcem</button>
+                    <button class="follow-button">Prati</button>
                 </div>
             </li>
         </ul>
 	</div>
 
-	<div class="chat-window">
+	<div class="chat-window hidden">
 		<div class="chat-header">
 			<h2>Razgovor sa prodavcem</h2>
 			<button class="close-button">Zatvori</button>
@@ -77,7 +84,7 @@
 		chatButtons.forEach(button => {
 			button.addEventListener('click', () => {
 				const chatWindow = document.querySelector('.chat-window');
-				chatWindow.style.display = 'block';
+				chatWindow.classList.remove('hidden');
 
 				const sellerId = button.getAttribute('data-seller');
 
@@ -88,12 +95,23 @@
 		const closeButton = document.querySelector('.close-button');
 		closeButton.addEventListener('click', () => {
 			const chatWindow = document.querySelector('.chat-window');
-			chatWindow.style.display = 'none';
+			chatWindow.classList.add('hidden');
 		});
 
 		function sendNotification(sellerId) {
 			console.log(`Notification sent to seller ${sellerId}`);
 		}
+
+        function followButtonClicked(event) {
+			const adTitle = event.target.parentNode.querySelector('h3').textContent;
+
+			alert(`Zapratili ste "${adTitle}"!`);
+		}
+
+		const followButtons = document.querySelectorAll('.follow-button');
+		followButtons.forEach(button => {
+			button.addEventListener('click', followButtonClicked);
+		});
 	</script>
 </body>
 </html>

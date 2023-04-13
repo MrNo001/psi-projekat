@@ -79,12 +79,19 @@ nav a:hover {
     margin-top: 0;
 }
 
+a h3 {
+	color:black;
+}
+
+li a {
+	text-decoration: none;
+}
+
 .ads img {
     max-width: 100%;
 }
 
-.chat-button, .close-button {
-    display: block;
+.follow-button, .chat-button, .close-button, .submit-button, .login-button {
     margin-top: 10px;
     padding: 10px;
     background-color: darkslategray;
@@ -94,7 +101,11 @@ nav a:hover {
     cursor: pointer;
 }
 
-.chat-button:hover {
+.follow-button, .chat-button, .close-button {
+    display: block;
+}
+
+.follow-button:hover, .chat-button:hover, .close-button:hover, .send-button:hover, .submit-button:hover {
     background-color: gray;
 }
 
@@ -104,4 +115,8 @@ nav a:hover {
     color: white;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.hidden {
+    display: none;
 }
