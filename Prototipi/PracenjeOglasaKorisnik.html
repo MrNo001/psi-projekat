@@ -1,36 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="PracenjeOglasa.css">
-	<title>Praćenje oglasa prototip</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="PracenjeOglasa.css">
+    <title>Praćenje oglasa prototip</title>
 </head>
 <body>
-	<header>
-		<h1>Polovna vozila</h1>
-	</header>
+    <header>
+        <h1>Polovna vozila</h1>
+    </header>
 
-	<nav>
-		<ul>
-			<li><a href="#">Pocetna</a></li>
-			<li><a href="#">Oglasi</a></li>
-			<li><a href="#">Praćeni oglasi</a></li>
-			<li><a href="#">Kreiraj nalog</a></li>
-			<li><a href="#">Prijavi se</a></li>
-		</ul>
-	</nav>
+    <nav>
+        <ul>
+            <li><a href="Pocetna.html">Pocetna</a></li>
+			<li><a href="prikaz_oglasa.html">Oglasi</a></li>
+            <li><a href="LoginPage.html">Odjavi se</a></li>
+        </ul>
+    </nav>
 
-	<main>
-		<h2>Oglasi</h2>
-		<ul>
+    <main>
+        <h2>Oglasi</h2>
+        <form id="ads-form">
+            <label for="model-input">Model vozila:</label>
+            <input type="text" id="model-input" name="model" placeholder="Honda Civic" required>
+            <button type="submit" class="submit-button">Pronađi oglase</button>
+        </form>
+		<br>
+        <ul id="ads=list">
 			<li>
-				<h3>Naslov oglasa 1</h3>
+				<a href="prikaz_oglasa.html"><h3>2018 Honda Civic</h3></a>
 				<p>Ovde treba da bude opis oglasa</p>
 				<img src="ad1.jbg" alt="Ovde treba da bude slika oglasa"/>
 				<br>
-				<button class="follow-button">Prati</button>
+				<button class="follow-button">Prati</button>	
 			</li>
 			<li>
 				<h3>Naslov oglasa 2</h3>
@@ -48,12 +52,11 @@
 			</li>
 		</ul>
 
-		<h2>Praćeni oglasi</h2>
-		<ul id="followed-ads-list">
-		</ul>
-	</main>
+        <h2>Praćeni oglasi</h2>
+        <ul id="followed-ads-list"></ul>
+    </main>
 
-	<script>
+    <script>
 		function followButtonClicked(event) {
 			const adTitle = event.target.parentNode.querySelector('h3').textContent;
 			const followedAdsList = document.getElementById('followed-ads-list');

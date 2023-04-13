@@ -79,12 +79,19 @@ main h3 {
 	margin-top: 0;
 }
 
+a h3 {
+	color:black;
+}
+
+li a {
+	text-decoration: none;
+}
+
 main img {
 	max-width: 100%;
 }
 
-.follow-button {
-	display: block;
+.follow-button, .submit-button, .login-button {
 	margin-top: 10px;
 	padding: 10px;
 	background-color: darkslategrey;
@@ -94,7 +101,11 @@ main img {
 	cursor: pointer;
 }
 
-.follow-button:hover {
+.follow-button {
+	display: block;
+}
+
+.follow-button:hover, .submit-button:hover {
 	background-color: gray;
 }
 
