@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 from .forms import SignupForm
 from offer.models import Offer
 from search import views as v
@@ -13,7 +13,7 @@ def signup(request):
         if form.is_valid():
             form.save()
 
-            return redirect('/account/login/', permanent=True)
+            return redirect('/login/', permanent=True)
     else:
         form = SignupForm()
 
@@ -23,7 +23,6 @@ def signup(request):
 
 
 @login_required
-
 def dashboard(request):
     offers = Offer.objects.filter(created_by=request.user)
 
@@ -35,4 +34,3 @@ def dashboard(request):
 def logoutuser(request):
     logout(request)
     return v.index(request)
-    
