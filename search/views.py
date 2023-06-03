@@ -2,6 +2,7 @@ from django.shortcuts import render
 from offer.models import Offer
 from account.forms import SignupForm
 from django.db.models import Q
+from django.http import HttpResponse
 
 
 def index(request):
@@ -22,3 +23,7 @@ def browse(request):
         'offers': offers,
         'query': query,
     })
+
+def about(request):
+
+    return HttpResponse("O nama")

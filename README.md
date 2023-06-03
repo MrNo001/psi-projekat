@@ -27,16 +27,16 @@ account
 - 'login'
 - 'registracija'
 - 'profil'
-	- 'izmeni'
-	- 'mojiOglasi'
-	- 'praceniOglasi'
-	- 'poruke'
+	- 'uredi'
+	- mojiOglasi
+	- praceniOglasi
 
 offer
-- 'oglas' [+id]
-	- 'izmeni'
+- 'oglas'
+	- id / 'izmeni'
+	- id / 'ukloni'
+	- 'napravi'
 	- [f] pracenje oglasa
-- 'napravi'
 
 conversation
 - 'profil/poruke'

@@ -8,5 +8,5 @@ app_name = 'search'
 urlpatterns = [
     path('', views.index, name='home'),
     path('pretraga/', views.browse, name='browse'),
-    
+    path('o-nama/', views.about, name='about'),
 ]

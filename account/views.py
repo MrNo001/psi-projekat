@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import SignupForm
 from offer.models import Offer
 from search import views as v
+from django.http import HttpResponse
 
 
 def signup(request):
@@ -29,6 +30,11 @@ def dashboard(request):
     return render(request, 'account/dashboard.html', {
         'offers': offers,
     })
+
+@login_required
+def editProfile(request):
+    
+    return HttpResponse("TODO")
 
 
 def logoutuser(request):

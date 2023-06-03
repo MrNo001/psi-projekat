@@ -6,11 +6,11 @@ from .models import  Offer
 
 
 
-def detail(request, pk):
+def details(request, pk):
     offer = get_object_or_404(Offer, pk=pk)
     related_offers = Offer.objects.filter().exclude(pk=pk)[0:3]
 
-    return render(request, 'offer/detail.html', {
+    return render(request, 'offer/details.html', {
         'offer': offer,
         'related_offers': related_offers
     })
