@@ -38,6 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'search.apps.SearchConfig',
+    'account.apps.AccountConfig',
+    'offer.apps.OfferConfig',
+    'conversation.apps.ConversationConfig',
+    'moderator.apps.ModeratorConfig',
 ]
 
 MIDDLEWARE = [
