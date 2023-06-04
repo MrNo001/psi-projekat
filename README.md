@@ -17,7 +17,7 @@ django
 - create new app: `python manage.py startapp <name>`
 
 
-## Struktura
+## Structure
 
 search
 - '' (home)
@@ -47,3 +47,8 @@ moderator
 - 'panel'
 - [f] prijavljivanje oglasa
 
+
+## Non-python dependencies
+
+- Tailwind ([quickstart](https://tailwindcss.com/docs/installation/play-cdn))
+- Flowbite ([quickstart](https://flowbite.com/docs/getting-started/quickstart/))
