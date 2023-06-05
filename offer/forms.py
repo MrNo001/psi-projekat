@@ -1,16 +1,19 @@
 from django import forms
 from .models import Offer, Picture
 
-INPUT_CLASSES = 'w-full py-4 px-6 rounded-xl border'
+# INPUT_CLASSES = 'w-full py-4 px-6 rounded-xl border'
+INPUT_CLASSES = 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
 
-"""
+
 class NewOfferForm(forms.ModelForm):
     class Meta:
         model = Offer
-        fields = ('name','model','description', 'price','godiste','body', 'images')
+        fields = ('name', 'make', 'model', 'description', 'price', 'year', 'body_type')
         widgets = {
-            
             'name': forms.TextInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'make': forms.TextInput(attrs={
                 'class': INPUT_CLASSES
             }),
             'model': forms.TextInput(attrs={
@@ -22,36 +25,29 @@ class NewOfferForm(forms.ModelForm):
             'price': forms.TextInput(attrs={
                 'class': INPUT_CLASSES
             }),
-            'godiste':forms.NumberInput(attrs={
-                'class':INPUT_CLASSES
-            }),
-            'body': forms.Select(attrs={
+            'year':forms.NumberInput(attrs={
                 'class': INPUT_CLASSES
             }),
-            'images': forms.FileInput(attrs = {
-                'class': INPUT_CLASSES,
+            'body_type': forms.Select(attrs={
+                'class': INPUT_CLASSES
             }),
         }
-"""
+        labels = {
+            'name': 'Naslov',
+            'make': 'Marka',
+            'model': 'Model',
+            'description': 'Opis',
+            'price': 'Cena',
+            'year': 'Godiste',
+            'body_type': 'Karoserija',
+        }
 
-"""
-class NewPictureForm(forms.ModelForm):
-    class Meta:
-        model=Picture
-        fields = ('image')
-        widgets = {  
-            'image': forms.ImageField(attrs={
-                'class': INPUT_CLASSES
-            })
-        }
-"""
 
 class EditOfferForm(forms.ModelForm):
    class Meta:
         model = Offer
         fields = ('name', 'model', 'description', 'price', 'year', 'body_type')
         widgets = {
-            
             'name': forms.TextInput(attrs={
                 'class': INPUT_CLASSES
             }),
@@ -65,7 +61,7 @@ class EditOfferForm(forms.ModelForm):
                 'class': INPUT_CLASSES
             }),
             'year':forms.NumberInput(attrs={
-                'class':INPUT_CLASSES
+                'class': INPUT_CLASSES
             }),
             'body_type': forms.Select(attrs={
                 'class': INPUT_CLASSES
@@ -91,22 +87,25 @@ class MultipleFileField(forms.FileField):
         return result
 
 
-class NewOfferForm(forms.Form):
-
-    name = forms.CharField(max_length=255)
-    description = forms.Textarea()
-
-    make = forms.CharField(max_length=255)
-    model = forms.CharField(max_length=255)
-    year = forms.IntegerField()
-    mileage = forms.IntegerField()
-    body_type = forms.ChoiceField(choices=Offer.BODY_TYPES)
-    fuel_type = forms.ChoiceField(choices=Offer.FUEL_TYPES)
-    gearbox = forms.ChoiceField(choices=Offer.GEARBOX_TYPES)
-    power = forms.IntegerField()
-
-    price = forms.FloatField()
+class FileFieldForm(forms.Form):
 
     file_field = MultipleFileField()
 
 
+# class NewOfferForm(forms.Form):
+
+#     name = forms.CharField(max_length=255)
+#     description = forms.Textarea()
+
+#     make = forms.CharField(max_length=255)
+#     model = forms.CharField(max_length=255)
+#     year = forms.IntegerField()
+#     mileage = forms.IntegerField()
+#     body_type = forms.ChoiceField(choices=Offer.BODY_TYPES)
+#     fuel_type = forms.ChoiceField(choices=Offer.FUEL_TYPES)
+#     gearbox = forms.ChoiceField(choices=Offer.GEARBOX_TYPES)
+#     power = forms.IntegerField()
+
+#     price = forms.FloatField()
+
+#     file_field = MultipleFileField()

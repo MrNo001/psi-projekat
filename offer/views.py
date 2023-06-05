@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
-from .forms import NewOfferForm, EditOfferForm
+from .forms import NewOfferForm, EditOfferForm, FileFieldForm
 from .models import Offer, Picture
 
 
@@ -23,14 +23,13 @@ def details(request, pk):
 @login_required
 def new(request):
     if request.method == 'POST':
-        form = NewOfferForm(request.POST, request.FILES)
+        form1 = NewOfferForm(request.POST, request.FILES)
+        form2 = FileFieldForm(request.POST, request.FILES)
 
-        if form.is_valid():
-            # offer = form.save(commit=False)
-            offer = Offer()
-            offer.name = form.cleaned_data['name']
+        if form1.is_valid() and form2.is_valid():
+            offer = form1.save(commit=False)
+            # offer = Offer()
             offer.created_by = request.user
-            offer.price = 100
             offer.save()
 
             for img in request.FILES.getlist('file_field'):
@@ -42,11 +41,13 @@ def new(request):
 
             return redirect('offer:details', pk=offer.id)
     else:
-        form = NewOfferForm()
+        form1 = NewOfferForm()
+        form2 = FileFieldForm()
 
     return render(request, 'offer/form2.html', {
-        'form': form,
-        'title': 'New offer',
+        'form1': form1,
+        'form2': form2,
+        'title': 'Kreiranje oglasa',
     })
 
 @login_required
@@ -65,7 +66,7 @@ def edit(request, pk):
 
     return render(request, 'offer/form.html', {
         'form': form,
-        'title': 'Edit offer',
+        'title': 'Izmena oglasa',
     })
 
 @login_required

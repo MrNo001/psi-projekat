@@ -1,6 +1,6 @@
 {% extends 'frame.html' %}
 
-{% block title %}Items{% endblock %}
+{% block title %}Oglasi{% endblock %}
 
 {% block content %}
     <div class="pb-6 grid grid-cols-4 gap-4 bg-gray-100">
@@ -8,13 +8,13 @@
             <form method="get" action="{% url 'search:browse' %}">
                 <input name="query" class="w-full py-4 px-6 border rounded-xl" type="text" value="{{ query }}" placeholder="Search description">
 
-                <button class="mt-2 py-4 px-8 text-lg bg-teal-500 text-white rounded-xl">Search</button>
+                <button class="mt-2 py-4 px-8 text-lg bg-teal-500 text-white rounded-xl">Pretraži</button>
             </form>
 
             <hr class="my-6">
 
             <ul>
-                <li><a href="{% url 'search:browse' %}" class="mt-2 py-4 px-8 inline-block bg-yellow-500 text-lg rounded-xl text-white">Clear</a>
+                <li><a href="{% url 'search:browse' %}" class="mt-2 py-4 px-8 inline-block bg-yellow-500 text-lg rounded-xl text-white">Ukloni pretragu</a>
         </div>
 
         <div class="col-span-3">
@@ -28,7 +28,7 @@
     
                             <div class="p-6 bg-white rounded-b-xl">
                                 <h2 class="text-2xl">{{ offer.name }}</h2>
-                                <p class="text-gray-500">Price: {{ offer.price }}</p>
+                                <p class="text-gray-500">Cena: {{ offer.price }}</p>
                             </div>
                         </a>
                     </div>
