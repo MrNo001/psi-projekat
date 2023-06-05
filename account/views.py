@@ -25,17 +25,26 @@ def signup(request):
 
 @login_required
 def dashboard(request):
-    offers = Offer.objects.filter(created_by=request.user)
+    
+    myOffers = Offer.objects.filter(created_by=request.user)
+    myOffersPacked = []
+    for offer in myOffers:
+        myOffersPacked.append({
+            'offer': offer,
+            'image': Picture.objects.filter(offer=offer)[0]
+        })
 
-    packed = []
-    for offer in offers:
-        packed.append({
+    trackedOffers = Offer.objects.filter(subscribers=request.user)
+    trackedOffersPacked = []
+    for offer in trackedOffers:
+        trackedOffersPacked.append({
             'offer': offer,
             'image': Picture.objects.filter(offer=offer)[0]
         })
 
     return render(request, 'account/dashboard.html', {
-        'offers': packed,
+        'myOffers': myOffersPacked,
+        'trackedOffers': trackedOffersPacked,
     })
 
 @login_required

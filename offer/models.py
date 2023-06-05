@@ -43,6 +43,8 @@ class Offer(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     is_premium = models.BooleanField(default=False)
 
+    subscribers = models.ManyToManyField(User)
+
     
     def __str__(self):
         return self.name

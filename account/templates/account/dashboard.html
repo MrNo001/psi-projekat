@@ -5,13 +5,24 @@
 {% block content %}
 
     <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-        <a href={% url 'account:logoutuser' %} class="px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl hover:bg-gray-700">Izloguj se</a>
-        <h2 class="mb-12 text-2xl text-center">Moji oglasi</h2>
 
+        <a href={% url 'account:logoutuser' %} class="px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl hover:bg-gray-700">Izloguj se</a>
+
+        <h2 class="mb-12 text-2xl text-center">Moji oglasi</h2>
         <div class="grid grid-cols-3 gap-3">
-            {% for offer in offers %}
+            {% for offer in myOffers %}
                 {% include 'offer/card.html' with card=offer %}
             {% endfor %}
         </div>
+
+        <br>
+
+        <h2 class="mb-12 text-2xl text-center">Oglasi koje pratim</h2>
+        <div class="grid grid-cols-3 gap-3">
+            {% for offer in trackedOffers %}
+                {% include 'offer/card.html' with card=offer %}
+            {% endfor %}
+        </div>
+
     </div>
 {% endblock %}
