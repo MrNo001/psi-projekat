@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from .forms import SignupForm
-from offer.models import Offer
+from offer.models import Offer, Picture
 from search import views as v
 from django.http import HttpResponse
 
@@ -27,8 +27,15 @@ def signup(request):
 def dashboard(request):
     offers = Offer.objects.filter(created_by=request.user)
 
+    packed = []
+    for offer in offers:
+        packed.append({
+            'offer': offer,
+            'image': Picture.objects.filter(offer=offer)[0]
+        })
+
     return render(request, 'account/dashboard.html', {
-        'offers': offers,
+        'offers': packed,
     })
 
 @login_required

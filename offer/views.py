@@ -10,14 +10,19 @@ def details(request, pk):
     offer = get_object_or_404(Offer, pk=pk)
     related_offers = Offer.objects.filter().exclude(pk=pk)[0:3]
     images = Picture.objects.filter(offer=pk)
-    print(related_offers)
-    print(images)
+
+    packed = []
+    for offer in related_offers:
+        packed.append({
+            'offer': offer,
+            'image': Picture.objects.filter(offer=offer)[0]
+        })
 
     return render(request, 'offer/details.html', {
         'offer': offer,
         'images': images,
         'range': range(len(images)),
-        'related_offers': related_offers
+        'related_offers': packed
     })
 
 @login_required

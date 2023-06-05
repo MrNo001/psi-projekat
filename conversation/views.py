@@ -16,7 +16,7 @@ def new_conversation(request, offer_pk):
     conversations = Conversation.objects.filter(offer=offer).filter(members__in=[request.user.id])
 
     if conversations:
-        return redirect('conversation:detail', pk=conversations.first().id)
+        return redirect('conversation:details', pk=conversations.first().id)
 
     if request.method == 'POST':
         form = ConversationMessageForm(request.POST)
@@ -32,7 +32,7 @@ def new_conversation(request, offer_pk):
             conversation_message.created_by = request.user
             conversation_message.save()
 
-            return redirect('offer:detail', pk=offer_pk)
+            return redirect('offer:details', pk=offer_pk)
     else:
         form = ConversationMessageForm()
     
@@ -63,11 +63,11 @@ def detail(request, pk):
 
             conversation.save()
 
-            return redirect('conversation:detail', pk=pk)
+            return redirect('conversation:details', pk=pk)
     else:
         form = ConversationMessageForm()
 
-    return render(request, 'conversation/detail.html', {
+    return render(request, 'conversation/details.html', {
         'conversation': conversation,
         'form': form
     })
