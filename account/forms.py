@@ -1,9 +1,12 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.models import User
+from account.models import User
 
 
 class LoginForm(AuthenticationForm):
+    class Meta:
+        model = User
+
     username = forms.CharField(widget=forms.TextInput(attrs={
         'placeholder': 'Your username',
         'class': 'w-full py-4 px-6 rounded-xl'
@@ -16,7 +19,7 @@ class LoginForm(AuthenticationForm):
 class SignupForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ('username', 'email', 'password1', 'password2','tip')
     
     username = forms.CharField(widget=forms.TextInput(attrs={
         'placeholder': 'Your username',
@@ -34,3 +37,9 @@ class SignupForm(UserCreationForm):
         'placeholder': 'Repeat password',
         'class': 'w-full py-4 px-6 rounded-xl'
     }))
+
+    tip = forms.ChoiceField(widget=forms.Select(attrs={
+        'placeholder': 'tip',
+        'class': 'w-full py-4 px-6 rounded-xl'
+    },choices=[("K", "Klijent"), ("F", "Firma")]))
+    

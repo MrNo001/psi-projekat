@@ -3,6 +3,27 @@
 {% block title %}{{ offer.name }}{% endblock %}
 
 {% block content %}
+
+<div class='messages'>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }} bg-green-100 rounded-full p-1 m-1 "{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+
+<script>
+    setTimeout(function()
+    {
+        if($('.messages').length != 0)
+        {
+            $('.messages').remove();
+        }
+    },4000)
+</script>
+
 <div class="grid grid-cols-5 gap-6">
     {% comment %} <div class="col-span-3">
         <img src="{{ offer.images.url }}" class="rounded-xl">
@@ -57,9 +78,19 @@
             </p>
         {% endif %}
 
-        {% if request.user == offer.created_by %}
+        {% if request.user == offer.created_by or request.user.tip == "A" %}
             <div class="mt-6 p-6 bg-white rounded-xl">
-                <p>This is your offer!</p>
+                {% if request.user == offer.created_by %}
+
+                    <p>This is your offer!</p>
+
+                {%endif%}
+
+                {% if request.user.tip == "A" and request.user != offer.created_by %}
+
+                    <p>Regulate this offer</p>
+
+                {%endif%}
 
                 <a href="{% url 'offer:edit' offer.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl">Edit</a>
                 <a href="{% url 'offer:delete' offer.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Delete</a>
@@ -67,6 +98,14 @@
         {% else %}  
             <a href="{% url 'conversation:new' offer.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Contact seller</a>
         {% endif %}
+
+        {% if request.user != offer.created_by %}
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Report add</button>
+            </form>
+        {% endif %}
+       
     </div>
 </div>
 

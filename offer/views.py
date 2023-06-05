@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import NewOfferForm, EditOfferForm, FileFieldForm
 from .models import Offer, Picture
+from django.contrib import messages
 
 
 
@@ -10,6 +11,13 @@ def details(request, pk):
     offer = get_object_or_404(Offer, pk=pk)
     related_offers = Offer.objects.filter().exclude(pk=pk)[0:3]
     images = Picture.objects.filter(offer=pk)
+
+    
+    if request.method == 'POST':
+        offer.reported = True
+        offer.save()
+        messages.info(request, 'Add successfuly reported')
+       
 
     packed = []
     for offer in related_offers:
@@ -77,6 +85,6 @@ def edit(request, pk):
 @login_required
 
 def delete(request, pk):
-    offer = get_object_or_404(Offer, pk=pk, created_by=request.user)
+    offer = get_object_or_404(Offer, pk=pk)#created_by=request.user
     offer.delete()
     return redirect('/')

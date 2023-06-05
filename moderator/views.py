@@ -1,6 +1,18 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from offer.models import Offer,Picture
 
 def panel(request):
-    
-    return HttpResponse("Moderator panel")
+
+    ReportedOffers = Offer.objects.filter(reported = True)
+    ReportedOffersPacked = []
+    for offer in ReportedOffers:
+        ReportedOffersPacked.append({
+            'offer': offer,
+            'image': Picture.objects.filter(offer=offer)[0]
+        })
+
+    return render(request, 'moderator/reports.html', {
+        'ReportedOffers': ReportedOffersPacked
+    })
+

@@ -56,3 +56,5 @@ def editProfile(request):
 def logoutuser(request):
     logout(request)
     return v.index(request)
+
+
