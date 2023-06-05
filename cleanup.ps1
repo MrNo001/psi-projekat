@@ -8,7 +8,7 @@ if ($command -eq "all") {
     Remove-Item db.sqlite3
 }
 elseif ($command -eq "migrations") {
-    Remove-Item -Force -Recurse */migrations
+    Remove-Item -Force -Recurse */migrations/* -Exclude __init__.py
 }
 else {
     Write-Host "Invalid command. Please use 'all' or 'migrations' as the first argument."
