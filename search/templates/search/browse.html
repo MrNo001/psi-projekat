@@ -20,19 +20,8 @@
         <div class="col-span-3">
             <div class="grid grid-cols-3 gap-3">
                 {% for offer in offers %}
-                    <div>
-                        <a href="{% url 'offer:details' offer.offer.id %}">
-                            <div>
-                                <img src="{{ offer.image.image.url }}" class="rounded-t-xl">
-                            </div>
-    
-                            <div class="p-6 bg-white rounded-b-xl">
-                                <h2 class="text-2xl">{{ offer.offer.name }}</h2>
-                                <p class="text-gray-500">Cena: {{ offer.offer.price }}</p>
-                            </div>
-                        </a>
-                    </div>
-                {% endfor %}
+                {% include 'offer/card.html' with card=offer %}
+            {% endfor %}
             </div>
         </div>
     </div>
