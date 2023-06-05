@@ -24,6 +24,8 @@ urlpatterns = [
     path('profil/poruke/', include('conversation.urls')),
     path('', include('moderator.urls')),
     path('admin/', admin.site.urls),
+    path('',include('company.urls')),
+
 ]
 
 from django.conf import settings

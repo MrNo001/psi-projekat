@@ -12,7 +12,7 @@ def panel(request):
             'image': Picture.objects.filter(offer=offer)[0]
         })
 
-    return render(request, 'moderator/reports.html', {
+    return render(request, 'moderator/panel.html', {
         'ReportedOffers': ReportedOffersPacked
     })
 

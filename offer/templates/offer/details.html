@@ -69,7 +69,13 @@
     <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
         <h1 class="mb-6 text-3xl">{{ offer.name }}</h1>
         <p class="text-gray-500"><strong>Price: </strong>{{ offer.price }}</p>
-        <p class="text-gray-500"><strong>Seller: </strong>{{ offer.created_by.username }}</p>
+        {% if offer.created_by.tip != 'F' %}
+            <p class="text-gray-500"><strong>Seller: </strong>{{ offer.created_by.username }}</p>
+
+        {% else %}
+            <a href= "{% url 'company:plac' offer.created_by.username %}" class="text-gray-500"><strong>Seller: </strong>{{ offer.created_by.username }}</a>
+
+        {% endif %}
     
         {% if offer.description %}
             <p class="text-gray-700">

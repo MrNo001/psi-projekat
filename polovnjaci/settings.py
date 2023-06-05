@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'offer.apps.OfferConfig',
     'conversation.apps.ConversationConfig',
     'moderator.apps.ModeratorConfig',
+    'company.apps.CompanyConfig',
+    
 ]
 
 MIDDLEWARE = [

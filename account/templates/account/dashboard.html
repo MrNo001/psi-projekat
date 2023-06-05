@@ -10,7 +10,7 @@
         <a href={% url 'account:logoutuser' %} class="px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl hover:bg-gray-700">Izloguj se</a>
 
         {% if request.user.tip == "A" %}
-        <a href={% url 'moderator:panel' %} class="px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl hover:bg-gray-700">Report dashboard</a>
+        <a href="../panel/" class="px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl hover:bg-gray-700">Report dashboard</a>
 
         {% endif %}
 
