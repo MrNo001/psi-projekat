@@ -9,7 +9,7 @@ from django.contrib import messages
 
 def details(request, pk):
     offer = get_object_or_404(Offer, pk=pk)
-    related_offers = Offer.objects.filter().exclude(pk=pk)[0:3]
+    related_offers = Offer.objects.filter().exclude(pk=pk)[0:5]
     images = Picture.objects.filter(offer=pk)
 
     
