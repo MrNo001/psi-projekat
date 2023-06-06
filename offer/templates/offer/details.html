@@ -92,8 +92,8 @@
     <h2 class="mb-12 text-2xl text-center">Slični oglasi</h2>
 
     <div class="grid grid-cols-5 gap-3">
-        {% for offer in related_offers %}
-            {% include 'offer/card3.html' with card=offer %}
+        {% for related_offer in related_offers %}
+            {% include 'offer/card3.html' with card=related_offer %}
         {% endfor %}
     </div>
 </div>

@@ -9,7 +9,7 @@ from django.contrib import messages
 
 def details(request, pk):
     offer = get_object_or_404(Offer, pk=pk)
-    related_offers = Offer.objects.filter().exclude(pk=pk)[0:5]
+    related_offers = Offer.objects.filter(make=offer.make,model=offer.model).exclude(pk=pk)[0:5]
     images = Picture.objects.filter(offer=pk)
 
     
@@ -20,10 +20,10 @@ def details(request, pk):
        
 
     packed = []
-    for offer in related_offers:
+    for rel_offer in related_offers:
         packed.append({
-            'offer': offer,
-            'image': Picture.objects.filter(offer=offer)[0]
+            'offer': rel_offer,
+            'image': Picture.objects.filter(offer=rel_offer)[0]
         })
 
     return render(request, 'offer/details.html', {
