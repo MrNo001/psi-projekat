@@ -49,7 +49,7 @@ def new(request):
         form1 = NewOfferForm()
         form2 = FileFieldForm()
 
-    return render(request, 'offer/form2.html', {
+    return render(request, 'offer/form.html', {
         'form1': form1,
         'form2': form2,
         'title': 'Kreiranje oglasa',

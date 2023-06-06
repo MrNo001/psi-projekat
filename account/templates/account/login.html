@@ -6,21 +6,36 @@
 <div class="w-1/2 my-6 mx-auto p-6 bg-gray-100 rounded-xl">
     <h1 class="mb-6 text-3xl">Prijava</h1>
 
+
+    
     <form method="post" action=".">
         {% csrf_token %}
 
-        <div class="mb-3">
-            <label class="inline-block mb-2">Korisničko ime</label><br>
+
+        {% comment %} {{ form.non_field_errors }} {% endcomment %}
+        <div class="mb-6">
+            {{ form.username.errors }}
+            <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Korisničko ime</label>
+            {% comment %} <input type="text" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required> {% endcomment %}
             {{ form.username }}
         </div>
-
-        <div class="mb-3">
-            <label class="inline-block mb-2">Šifra</label><br>
+        <div class="mb-6">
+            {{ form.password.errors }}
+            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lozinka</label>
+            {% comment %} <input type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required> {% endcomment %}
             {{ form.password }}
         </div>
 
+        
+        <div class="flex items-start mb-6">
+            <div class="flex items-center h-5">
+                <input id="remember" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800">
+            </div>
+            <label for="remember" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Zapamti me</label>
+        </div>
+
         {% if form.errors or form.non_field_errors %}
-            <div class="mb-3 p-6 bg-red-100 rounded-xl">
+            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400">
                 {% for field in form %}
                     {{ field.errors }}
                 {% endfor %}
@@ -29,7 +44,12 @@
             </div>
         {% endif %}
 
-        <button class="py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Uloguj me</button>
+        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Uloguj se</button>
+    
+    
     </form>
+    
+    
+    
 </div>
 {% endblock %}
