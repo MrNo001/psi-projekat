@@ -18,9 +18,9 @@
     </div>
     <div class="p-4">
         <a href="{% url 'offer:details' card.offer.id %}">
-            <h6 class="text-xl font-semibold text-gray-800">Card Title</h2>
+            <h6 class="text-xl font-semibold text-gray-800">{{ card.offer.name }}</h2>
         </a>
-        <p class="text-gray-600 mt-2">Card description goes here.</p>
+        <p class="text-gray-600 mt-2">{{ card.offer.description }}</p>
     </div>
   </div>
   
