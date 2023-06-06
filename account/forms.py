@@ -22,44 +22,43 @@ class SignupForm(UserCreationForm):
         model = User
         fields = ('username', 'email', 'password1', 'password2','tip')
 
-        widgets = {
-            'username': forms.TextInput(attrs={
-                'class': INPUT_CLASSES
-            }),
-            'email': forms.TextInput(attrs={
-                'class': INPUT_CLASSES
-            }),
-            'password1': forms.PasswordInput(attrs={
-                'class': 'w-full py-4 px-6 rounded-xl'
-            }),
-            'password2': forms.PasswordInput(attrs={
-            'placeholder': 'Your password',
-            'class': 'w-full py-4 px-6 rounded-xl'
-            }),
-            'tip': forms.Select(choices=[("K", "Klijent"), ("F", "Firma")],attrs={
-                'class': INPUT_CLASSES
-            }),
-        }
+        # widgets = {
+        #     'username': forms.TextInput(attrs={
+        #         'class': INPUT_CLASSES
+        #     }),
+        #     'email': forms.TextInput(attrs={
+        #         'class': INPUT_CLASSES
+        #     }),
+        #     'password1': forms.PasswordInput(attrs={
+        #         'class': 'w-full py-4 px-6 rounded-xl'
+        #     }),
+        #     'password2': forms.PasswordInput(attrs={
+        #     'placeholder': 'Your password',
+        #     'class': 'w-full py-4 px-6 rounded-xl'
+        #     }),
+        #     'tip': forms.Select(choices=[("K", "Klijent"), ("F", "Firma")],attrs={
+        #         'class': INPUT_CLASSES
+        #     }),
+        # }
     
-    # username = forms.CharField(widget=forms.TextInput(attrs={
-    #     'placeholder': 'Your username',
-    #     'class': 'w-full py-4 px-6 rounded-xl'
-    # }))
-    # email = forms.CharField(widget=forms.EmailInput(attrs={
-    #     'placeholder': 'Your email address',
-    #     'class': 'w-full py-4 px-6 rounded-xl'
-    # }))
-    # password1 = forms.CharField(widget=forms.PasswordInput(attrs={
-    #     'placeholder': 'Your password',
-    #     'class': 'w-full py-4 px-6 rounded-xl'
-    # }))
-    # password2 = forms.CharField(widget=forms.PasswordInput(attrs={
-    #     'placeholder': 'Repeat password',
-    #     'class': 'w-full py-4 px-6 rounded-xl'
-    # }))
-
-    # tip = forms.ChoiceField(widget=forms.Select(attrs={
-    #     'placeholder': 'tip',
-    #     'class': 'w-full py-4 px-6 rounded-xl'
-    # },choices=[("K", "Klijent"), ("F", "Firma")]))
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Your username',
+        'class': 'w-full py-4 px-6 rounded-xl'
+    }))
+    email = forms.CharField(widget=forms.EmailInput(attrs={
+        'placeholder': 'Your email address',
+        'class': 'w-full py-4 px-6 rounded-xl'
+    }))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={
+        'placeholder': 'Your password',
+        'class': 'w-full py-4 px-6 rounded-xl'
+    }))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={
+        'placeholder': 'Repeat password',
+        'class': 'w-full py-4 px-6 rounded-xl'
+    }))
     
+    tip = forms.ChoiceField(choices=[("K", "Klijent"), ("F", "Firma")], widget=forms.Select(attrs={
+        'placeholder': 'Repeat password',
+        'class': 'w-full py-4 px-6 rounded-xl'
+    }), required=True)

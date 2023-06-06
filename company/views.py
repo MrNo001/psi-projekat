@@ -38,7 +38,7 @@ def rate(request, firm_name):
                 rate.user = user
                 rate.firm = firm
                 rate.save()
-                return HttpResponseRedirect(reverse('company:plac', args=[firm_name]))
+                return HttpResponseRedirect(reverse('company:plac', args=[firm]))
         else:
             form = RateForm()
 
