@@ -20,10 +20,22 @@ def panel(request):
 
 def report_ad(request):
     if request.method == 'POST' and 'offer_id' in request.POST:
-        ad_id = request.POST['offer_id']
+        offer_id = request.POST['offer_id']
         try:
-            offer = Offer.objects.get(id=ad_id)
+            offer = Offer.objects.get(id=offer_id)
             offer.reported = True
+            offer.save()
+            return JsonResponse({'success': True})
+        except Offer.DoesNotExist:
+            pass
+    return JsonResponse({'success': False})
+
+def follow_ad(request):
+    if request.method == 'POST' and 'offer_id' in request.POST:
+        offer_id = request.POST['offer_id']
+        try:
+            offer = Offer.objects.get(id=offer_id)
+            offer.subscribers.add(request.user)
             offer.save()
             return JsonResponse({'success': True})
         except Offer.DoesNotExist:
