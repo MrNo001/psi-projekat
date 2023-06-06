@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from offer.models import Offer,Picture
+from django.http import JsonResponse
 
 def panel(request):
 
@@ -15,4 +16,17 @@ def panel(request):
     return render(request, 'moderator/panel.html', {
         'ReportedOffers': ReportedOffersPacked
     })
+
+
+def report_ad(request):
+    if request.method == 'POST' and 'offer_id' in request.POST:
+        ad_id = request.POST['offer_id']
+        try:
+            offer = Offer.objects.get(id=ad_id)
+            offer.reported = True
+            offer.save()
+            return JsonResponse({'success': True})
+        except Offer.DoesNotExist:
+            pass
+    return JsonResponse({'success': False})
 
