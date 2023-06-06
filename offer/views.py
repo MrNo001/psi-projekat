@@ -88,3 +88,7 @@ def delete(request, pk):
     offer = get_object_or_404(Offer, pk=pk)#created_by=request.user
     offer.delete()
     return redirect('/')
+
+
+
+
