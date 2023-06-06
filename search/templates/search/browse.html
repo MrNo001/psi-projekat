@@ -7,6 +7,11 @@
         <div class="col-span-1">
             <form method="get" action="{% url 'search:browse' %}">
                 <input name="query" class="w-full py-4 px-6 border rounded-xl" type="text" value="{{ query }}" placeholder="Pretraga...">
+                <input type="text" class="w-full py-4 px-6 border rounded-xl" name="make" value="{{ make }}" placeholder="Make">
+                <input type="text" class="w-full py-4 px-6 border rounded-xl" name="model" value="{{ model }}" placeholder="Model">
+                <input type="number" class="w-full py-4 px-6 border rounded-xl" name="yearStart" value="{{ yearStart }}" placeholder="YearStart">
+                <input type="number" class="w-full py-4 px-6 border rounded-xl" name="yearEnd" value="{{ yearEnd }}" placeholder="YearEnd">
+                <button type="submit">Search</button>
 
                 <button class="mt-2 py-4 px-8 text-lg bg-teal-500 text-white rounded-xl">Pretraži</button>
             </form>
