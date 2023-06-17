@@ -6,6 +6,9 @@ from offer.models import Offer, Picture
 from search import views as v
 from django.http import HttpResponse
 from django.views.decorators.cache import cache_control
+from django.contrib import messages
+from .models import User
+from django.contrib.auth import login, authenticate
 
 def signup(request):
     if request.method == 'POST':
@@ -51,10 +54,16 @@ def dashboard(request):
 @login_required
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def editProfile(request):
+    currentuser=User.objects.get(id=request.user.id)
     
-    # return HttpResponse("TODO")
+    form = SignupForm(request.POST or None,instance=currentuser)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Job Posted Successfully')
+        login(request,currentuser)
+        return redirect('account:dashboard')
 
-    return render(request, 'account/edit.html')
+    return render(request, 'account/edit.html',{'form':form})
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def logoutuser(request):
