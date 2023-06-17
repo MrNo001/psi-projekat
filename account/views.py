@@ -5,7 +5,7 @@ from .forms import SignupForm
 from offer.models import Offer, Picture
 from search import views as v
 from django.http import HttpResponse
-
+from django.views.decorators.cache import cache_control
 
 def signup(request):
     if request.method == 'POST':
@@ -24,6 +24,7 @@ def signup(request):
 
 
 @login_required
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def dashboard(request):
     
     myOffers = Offer.objects.filter(created_by=request.user)
@@ -48,13 +49,14 @@ def dashboard(request):
     })
 
 @login_required
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def editProfile(request):
     
     # return HttpResponse("TODO")
 
     return render(request, 'account/edit.html')
 
-
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def logoutuser(request):
     logout(request)
     return v.index(request)
