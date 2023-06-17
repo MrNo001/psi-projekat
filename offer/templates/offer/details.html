@@ -1,100 +1,80 @@
-{% extends 'frame.html' %}
 
-{% block title %}{{ offer.name }}{% endblock %}
 
-{% block content %}
-
-<div class='messages'>
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }} bg-green-100 rounded-full p-1 m-1 "{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        {% comment %} <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                    Product name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Color
+                </th>
+                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                    Category
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Price
+                </th>
+            </tr>
+        </thead> {% endcomment %}
+        <tbody>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Marka
+                </th>
+                <td class="px-6 py-4">
+                    {{ offer.make }}
+                </td>
+                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Model
+                </th>
+                <td class="px-6 py-4">
+                    {{ offer.model }}
+                </td>
+            </tr>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Godište
+                </th>
+                <td class="px-6 py-4">
+                    {{ offer.year }}.
+                </td>
+                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Kilometraža
+                </th>
+                <td class="px-6 py-4">
+                    {{ offer.mileage }} km
+                </td>
+            </tr>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Karoserija
+                </th>
+                <td class="px-6 py-4">
+                    {{ offer.get_body_type_display }}
+                </td>
+                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Gorivo
+                </th>
+                <td class="px-6 py-4">
+                    {{ offer.get_fuel_type_display }}
+                </td>
+            </tr>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Vrsta menjača
+                </th>
+                <td class="px-6 py-4">
+                    {{ offer.get_gearbox_display }}
+                </td>
+                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Snaga motora
+                </th>
+                <td class="px-6 py-4">
+                    {{ offer.power }} kW
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
-
-<script>
-    setTimeout(function()
-    {
-        if($('.messages').length != 0)
-        {
-            $('.messages').remove();
-        }
-    },4000)
-</script>
-
-<div class="grid grid-cols-5 gap-6">
-    {% comment %} <div class="col-span-3">
-        <img src="{{ offer.images.url }}" class="rounded-xl">
-    </div> {% endcomment %}
-    
-    <div class="col-span-3">
-        
-        {% include 'offer/carousel1.html' with images=images range=range %}
-
-    </div>
-
-    <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
-        <h1 class="mb-6 text-3xl">{{ offer.name }}</h1>
-        <p class="text-gray-500"><strong>Cena: </strong>{{ offer.price }}</p>
-        {% if offer.created_by.tip != 'F' %}
-            <p class="text-gray-500"><strong>Prodavac: </strong>{{ offer.created_by.username }}</p>
-
-        {% else %}
-            <a href= "{% url 'company:plac' offer.created_by.username %}" class="text-gray-500"><strong>Prodavac: </strong>{{ offer.created_by.username }}</a>
-
-        {% endif %}
-    
-        {% if offer.description %}
-            <p class="text-gray-700">
-                <strong class="text-gray-500">Opis:</strong><br>
-                {{ offer.description }}
-            </p>
-        {% endif %}
-
-        {% if request.user == offer.created_by or request.user.tip == "A" %}
-            <div class="mt-6 p-6 bg-white rounded-xl">
-                {% if request.user == offer.created_by %}
-
-                    <p>Izmenite vaš oglas.</p>
-
-                {%endif%}
-
-                {% if request.user.tip == "A" and request.user != offer.created_by %}
-
-                    <p>Reguliši ovaj oglas.</p>
-
-                {%endif%}
-
-                <a href="{% url 'offer:edit' offer.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl">Izmeni</a>
-                <a href="{% url 'offer:delete' offer.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Obriši</a>
-            </div>
-        {% else %}  
-            <a href="{% url 'conversation:new' offer.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Kontaktiraj prodavca</a>
-        {% endif %}
-
-        {% if request.user != offer.created_by %}
-            <form method="POST">
-                {% csrf_token %}
-                <button type="submit" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Prijavi oglas</button>
-            </form>
-        {% endif %}
-
-        {% if offer.created_by.tip == "F" %}
-       
-        {% endif %}
-       
-    </div>
-</div>
-
-<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-    <h2 class="mb-12 text-2xl text-center">Slični oglasi</h2>
-
-    <div class="grid grid-cols-5 gap-3">
-        {% for related_offer in related_offers %}
-            {% include 'offer/card3.html' with card=related_offer %}
-        {% endfor %}
-    </div>
-</div>
-{% endblock %}

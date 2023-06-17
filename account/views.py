@@ -42,7 +42,7 @@ def dashboard(request):
             'image': Picture.objects.filter(offer=offer)[0]
         })
 
-    return render(request, 'account/dashboard.html', {
+    return render(request, 'account/dashboard_v2.html', {
         'myOffers': myOffersPacked,
         'trackedOffers': trackedOffersPacked,
     })
@@ -50,7 +50,9 @@ def dashboard(request):
 @login_required
 def editProfile(request):
     
-    return HttpResponse("TODO")
+    # return HttpResponse("TODO")
+
+    return render(request, 'account/edit.html')
 
 
 def logoutuser(request):

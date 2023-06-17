@@ -8,8 +8,15 @@ from django.http import HttpResponse
 def index(request):
     offers = Offer.objects.filter(is_premium=True)[0:6]
 
+    packed = []
+    for offer in offers:
+        packed.append({
+            'offer': offer,
+            'image': Picture.objects.filter(offer=offer)[0]
+        })
+
     return render(request, 'search/home.html', {
-        'offers': offers
+        'offers': packed
     })
 
 def browse(request):

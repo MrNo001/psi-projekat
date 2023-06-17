@@ -17,7 +17,6 @@ def details(request, pk):
         offer.reported = True
         offer.save()
         messages.info(request, 'Add successfuly reported')
-       
 
     packed = []
     for rel_offer in related_offers:
@@ -26,7 +25,7 @@ def details(request, pk):
             'image': Picture.objects.filter(offer=rel_offer)[0]
         })
 
-    return render(request, 'offer/details.html', {
+    return render(request, 'offer/offer1.html', {
         'offer': offer,
         'images': images,
         'range': range(len(images)),
@@ -57,7 +56,7 @@ def new(request):
         form1 = NewOfferForm()
         form2 = FileFieldForm()
 
-    return render(request, 'offer/form.html', {
+    return render(request, 'offer/new.html', {
         'form1': form1,
         'form2': form2,
         'title': 'Kreiranje oglasa',
@@ -77,7 +76,7 @@ def edit(request, pk):
     else:
         form = EditOfferForm(instance=offer)
 
-    return render(request, 'offer/form.html', {
+    return render(request, 'offer/edit.html', {
         'form': form,
         'title': 'Izmena oglasa',
     })

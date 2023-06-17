@@ -1,0 +1,48 @@
+{% extends 'frame.html' %}
+
+{% block title %}{{ offer.name }}{% endblock %}
+
+{% block content %}
+
+
+<div class="container mx-auto px-4 py-8">
+    <div class="bg-white rounded-lg shadow-lg lg:flex">
+      <div class="lg:w-1/2">
+        {% comment %} <img src="car-image.jpg" alt="Car Image" class="w-full h-auto rounded-lg"> {% endcomment %}
+        <div class="w-full h-auto rounded-lg">
+          {% include 'offer/carousel1.html' with images=images range=range %}
+        </div>
+      </div>
+      <div class="p-8 lg:w-1/2">
+        <h1 class="text-3xl lg:text-4xl font-bold mb-4">{{ offer.name }}</h1>
+        <div class="mb-6">
+          {% comment %} <h2 class="text-xl lg:text-2xl font-bold mb-2">Car Details</h2> {% endcomment %}
+          <ul class="mb-4">
+            {% include 'offer/details.html' with offer=offer %}
+          </ul>
+        </div>
+        <div class="mb-6">
+          <h2 class="text-xl lg:text-2xl font-bold mb-2">Opis</h2>
+          <p class="text-sm lg:text-base">{{ offer.description }}</p>
+        </div>
+        <div class="text-center">
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded">
+            Contact Seller
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+    <h2 class="mb-12 text-2xl text-center">Slični oglasi</h2>
+
+    <div class="grid grid-cols-5 gap-3">
+        {% for related_offer in related_offers %}
+            {% include 'offer/card3.html' with card=related_offer %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
