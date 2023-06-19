@@ -25,7 +25,7 @@ def details(request, pk):
             'image': Picture.objects.filter(offer=rel_offer)[0]
         })
 
-    return render(request, 'offer/offer1.html', {
+    return render(request, 'offer/offer3.html', {
         'offer': offer,
         'images': images,
         'range': range(len(images)),

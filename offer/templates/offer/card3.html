@@ -20,7 +20,8 @@
         <a href="{% url 'offer:details' card.offer.id %}">
             <h6 class="text-xl font-semibold text-gray-800">{{ card.offer.name }}</h2>
         </a>
-        <p class="text-gray-600 mt-2">{{ card.offer.description }}</p>
+        <p class="text-gray-600 mt-2">{{ card.offer.make }}, {{ card.offer.model }}</p>
+        <p class="text-gray-600 mt-2">{{ card.offer.year }}</p>
     </div>
   </div>
   
