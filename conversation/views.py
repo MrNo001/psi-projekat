@@ -49,7 +49,7 @@ def inbox(request):
     })
 
 @login_required
-def detail(request, pk):
+def details(request, pk):
     conversation = Conversation.objects.filter(members__in=[request.user.id]).get(pk=pk)
 
     if request.method == 'POST':

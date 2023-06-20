@@ -60,4 +60,4 @@ def browse(request):
 
 def about(request):
 
-    return HttpResponse("O nama")
+    return render(request, 'search/about.html')

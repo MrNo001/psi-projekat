@@ -24,7 +24,7 @@ urlpatterns = [
     path('profil/poruke/', include('conversation.urls')),
     path('', include('moderator.urls')),
     path('admin/', admin.site.urls),
-    path('',include('company.urls')),
+    path('', include('company.urls')),
 
 ]
 
