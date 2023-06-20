@@ -1,6 +1,6 @@
 from django.db import models
 
-from django.contrib.auth.models import User
+from account.models import User
 
 
 class Offer(models.Model):
@@ -44,6 +44,8 @@ class Offer(models.Model):
     is_premium = models.BooleanField(default=False)
 
     subscribers = models.ManyToManyField(User)
+
+    reported = models.BooleanField(default=False)
 
     
     def __str__(self):

@@ -1,0 +1,30 @@
+{% extends 'frame.html' %}
+
+{% block title %}Moj profil{% endblock %}
+
+
+
+
+
+{% block content %}
+
+    <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+
+        <a href={% url 'account:logoutuser' %} class="px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl hover:bg-gray-700">Izloguj se</a>
+        
+        <a href={% url 'account:dashboard' %} class="px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl hover:bg-gray-700">Back</a>
+
+     
+
+        
+        <h2 class="mb-12 text-2xl text-center">Prijavljeni oglasi</h2>
+        <div class="grid grid-cols-3 gap-3">
+            {% for offer in ReportedOffers %}
+                {% include 'offer/card1.html' with card=offer %}
+            {% endfor %}
+        </div>
+
+        <br>
+
+    </div>
+{% endblock %}

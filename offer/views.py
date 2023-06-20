@@ -3,22 +3,29 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import NewOfferForm, EditOfferForm, FileFieldForm
 from .models import Offer, Picture
+from django.contrib import messages
 
 
 
 def details(request, pk):
     offer = get_object_or_404(Offer, pk=pk)
-    related_offers = Offer.objects.filter().exclude(pk=pk)[0:3]
+    related_offers = Offer.objects.filter(make=offer.make,model=offer.model).exclude(pk=pk)[0:5]
     images = Picture.objects.filter(offer=pk)
 
+    
+    if request.method == 'POST':
+        offer.reported = True
+        offer.save()
+        messages.info(request, 'Add successfuly reported')
+
     packed = []
-    for offer in related_offers:
+    for rel_offer in related_offers:
         packed.append({
-            'offer': offer,
-            'image': Picture.objects.filter(offer=offer)[0]
+            'offer': rel_offer,
+            'image': Picture.objects.filter(offer=rel_offer)[0]
         })
 
-    return render(request, 'offer/details.html', {
+    return render(request, 'offer/offer3.html', {
         'offer': offer,
         'images': images,
         'range': range(len(images)),
@@ -49,7 +56,7 @@ def new(request):
         form1 = NewOfferForm()
         form2 = FileFieldForm()
 
-    return render(request, 'offer/form2.html', {
+    return render(request, 'offer/new.html', {
         'form1': form1,
         'form2': form2,
         'title': 'Kreiranje oglasa',
@@ -69,7 +76,7 @@ def edit(request, pk):
     else:
         form = EditOfferForm(instance=offer)
 
-    return render(request, 'offer/form.html', {
+    return render(request, 'offer/edit.html', {
         'form': form,
         'title': 'Izmena oglasa',
     })
@@ -77,6 +84,10 @@ def edit(request, pk):
 @login_required
 
 def delete(request, pk):
-    offer = get_object_or_404(Offer, pk=pk, created_by=request.user)
+    offer = get_object_or_404(Offer, pk=pk)#created_by=request.user
     offer.delete()
     return redirect('/')
+
+
+
+

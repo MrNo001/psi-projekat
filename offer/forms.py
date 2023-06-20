@@ -8,7 +8,7 @@ INPUT_CLASSES = 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded
 class NewOfferForm(forms.ModelForm):
     class Meta:
         model = Offer
-        fields = ('name', 'make', 'model', 'description', 'price', 'year', 'body_type')
+        fields = ('name', 'make', 'model', 'description', 'price', 'year', 'mileage', 'gearbox', 'body_type', 'fuel_type', 'power')
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': INPUT_CLASSES
@@ -28,7 +28,19 @@ class NewOfferForm(forms.ModelForm):
             'year':forms.NumberInput(attrs={
                 'class': INPUT_CLASSES
             }),
+            'mileage':forms.NumberInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'gearbox': forms.Select(attrs={
+                'class': INPUT_CLASSES
+            }),
             'body_type': forms.Select(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'fuel_type': forms.Select(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'power': forms.NumberInput(attrs={
                 'class': INPUT_CLASSES
             }),
         }
@@ -36,19 +48,26 @@ class NewOfferForm(forms.ModelForm):
             'name': 'Naslov',
             'make': 'Marka',
             'model': 'Model',
-            'description': 'Opis',
+            'description': 'Opis oglasa',
             'price': 'Cena',
-            'year': 'Godiste',
+            'year': 'Godište',
+            'mileage': 'Kilometraža',
+            'gearbox': 'Vrsta menjača',
             'body_type': 'Karoserija',
+            'fuel_type': 'Vrsta goriva',
+            'power': 'Snaga motora (u kW)',
         }
 
 
 class EditOfferForm(forms.ModelForm):
-   class Meta:
+    class Meta:
         model = Offer
-        fields = ('name', 'model', 'description', 'price', 'year', 'body_type')
+        fields = ('name', 'make', 'model', 'description', 'price', 'year', 'mileage', 'gearbox', 'body_type', 'fuel_type', 'power')
         widgets = {
             'name': forms.TextInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'make': forms.TextInput(attrs={
                 'class': INPUT_CLASSES
             }),
             'model': forms.TextInput(attrs={
@@ -63,9 +82,34 @@ class EditOfferForm(forms.ModelForm):
             'year':forms.NumberInput(attrs={
                 'class': INPUT_CLASSES
             }),
+            'mileage':forms.NumberInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'gearbox': forms.Select(attrs={
+                'class': INPUT_CLASSES
+            }),
             'body_type': forms.Select(attrs={
                 'class': INPUT_CLASSES
             }),
+            'fuel_type': forms.Select(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'power': forms.NumberInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+        }
+        labels = {
+            'name': 'Naslov',
+            'make': 'Marka',
+            'model': 'Model',
+            'description': 'Opis oglasa',
+            'price': 'Cena',
+            'year': 'Godište',
+            'mileage': 'Kilometraža',
+            'gearbox': 'Vrsta menjača',
+            'body_type': 'Karoserija',
+            'fuel_type': 'Vrsta goriva',
+            'power': 'Snaga motora (u kW)',
         }
 
 

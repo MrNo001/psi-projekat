@@ -1,93 +1,80 @@
-{% extends 'frame.html' %}
 
-{% block title %}{{ offer.name }}{% endblock %}
 
-{% block content %}
-<div class="grid grid-cols-5 gap-6">
-    {% comment %} <div class="col-span-3">
-        <img src="{{ offer.images.url }}" class="rounded-xl">
-    </div> {% endcomment %}
-    
-    <div class="col-span-3">
-        
-        <div id="default-carousel" class="relative w-full" data-carousel="static">
-            <!-- Carousel wrapper -->
-            <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-
-                {% for image in images %}
-                    <!-- Item -->
-                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="{{ image.image.url }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                    </div>
-                {% endfor %}
-
-            </div>
-            <!-- Slider indicators -->
-            <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
-                {% for i in range %}
-                    <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide {{i}}" data-carousel-slide-to="{{i}}"></button>
-                {% endfor %}
-            </div>
-            <!-- Slider controls -->
-            <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                    <svg aria-hidden="true" class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                    <span class="sr-only">Previous</span>
-                </span>
-            </button>
-            <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                    <svg aria-hidden="true" class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    <span class="sr-only">Next</span>
-                </span>
-            </button>
-        </div>
-
-    </div>
-
-    <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
-        <h1 class="mb-6 text-3xl">{{ offer.name }}</h1>
-        <p class="text-gray-500"><strong>Price: </strong>{{ offer.price }}</p>
-        <p class="text-gray-500"><strong>Seller: </strong>{{ offer.created_by.username }}</p>
-    
-        {% if offer.description %}
-            <p class="text-gray-700">
-                <strong class="text-gray-500">Description:</strong><br>
-                {{ offer.description }}
-            </p>
-        {% endif %}
-
-        {% if request.user == offer.created_by %}
-            <div class="mt-6 p-6 bg-white rounded-xl">
-                <p>This is your offer!</p>
-
-                <a href="{% url 'offer:edit' offer.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl">Edit</a>
-                <a href="{% url 'offer:delete' offer.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Delete</a>
-            </div>
-        {% else %}  
-            <a href="{% url 'conversation:new' offer.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Contact seller</a>
-        {% endif %}
-    </div>
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        {% comment %} <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                    Product name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Color
+                </th>
+                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                    Category
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Price
+                </th>
+            </tr>
+        </thead> {% endcomment %}
+        <tbody>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Marka
+                </th>
+                <td class="px-6 py-4">
+                    {{ offer.make }}
+                </td>
+                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Model
+                </th>
+                <td class="px-6 py-4">
+                    {{ offer.model }}
+                </td>
+            </tr>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Godište
+                </th>
+                <td class="px-6 py-4">
+                    {{ offer.year }}.
+                </td>
+                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Kilometraža
+                </th>
+                <td class="px-6 py-4">
+                    {{ offer.mileage }} km
+                </td>
+            </tr>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Karoserija
+                </th>
+                <td class="px-6 py-4">
+                    {{ offer.get_body_type_display }}
+                </td>
+                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Gorivo
+                </th>
+                <td class="px-6 py-4">
+                    {{ offer.get_fuel_type_display }}
+                </td>
+            </tr>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Vrsta menjača
+                </th>
+                <td class="px-6 py-4">
+                    {{ offer.get_gearbox_display }}
+                </td>
+                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Snaga motora
+                </th>
+                <td class="px-6 py-4">
+                    {{ offer.power }} kW
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
-
-<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-    <h2 class="mb-12 text-2xl text-center">Slični oglasi</h2>
-
-    <div class="grid grid-cols-3 gap-3">
-        {% for offer in related_offers %}
-            <div>
-                <a href="{% url 'offer:details' offer.offer.id %}">
-                    <div>
-                        <img src="{{ offer.image.image.url }}" class="rounded-t-xl">
-                    </div>
-
-                    <div class="p-6 bg-white rounded-b-xl">
-                        <h2 class="text-2xl">{{ offer.offer.name }}</h2>
-                        <p class="text-gray-500">Price: {{ offer.offer.price }}</p>
-                    </div>
-                </a>
-            </div>
-        {% endfor %}
-    </div>
-</div>
-{% endblock %}
