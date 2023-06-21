@@ -1,11 +1,9 @@
 from django.test import TestCase,Client
 from django.urls import reverse
-from django.contrib.auth.models import User
-from .models import User as CustomUser
 from .forms import SignupForm
 from offer.models import Offer, Picture
-
 from .models import User
+from search import views
 
 class UserModelTestCase(TestCase):
     def test_user_creation(self):
@@ -40,25 +38,23 @@ class AccountViewsTestCase(TestCase):
         self.client = Client()
         self.signup_url = reverse('account:signup')
         self.dashboard_url = reverse('account:dashboard')
-        self.edit_profile_url = reverse('account:edit_profile')
-        self.logout_url = reverse('account:logout')
+        self.edit_profile_url = reverse('account:editProfile')
+        self.logout_url = reverse('account:logoutuser')
 
     def test_signup_view(self):
         """
         Test the signup view to ensure it renders the signup template and creates a new user.
         """
         # Submit a POST request with valid form data
-        response = self.client.post(self.signup_url, {
-            'username': 'testuser',
-            'password1': 'testpassword',
-            'password2': 'testpassword',
-        })
+        response = self.client.post(self.signup_url, {'csrfmiddlewaretoken': ['EhudnsUkYYLzH4mxnYcl63pH6CU4BFDuznxr52VCM5evjhumoyBQeOOxfE3kyAey'], 'username': ['testuser'], 'email': ['sagasdgsa@gmail.com'], 'password1': ['nxsa0112'], 'password2': ['nxsa0112'], 'tip': ['K']})
+
+         # Check that a new user is created in the database
+        self.assertTrue(User.objects.filter(username='testuser').exists())
 
         # Check that the response redirects to the login page
-        self.assertRedirects(response, '/login/', status_code=302, target_status_code=200)
+        self.assertRedirects(response, '/login/', status_code=301, target_status_code=200)
 
-        # Check that a new user is created in the database
-        self.assertTrue(User.objects.filter(username='testuser').exists())
+       
 
     def test_dashboard_view(self):
         """
@@ -72,7 +68,7 @@ class AccountViewsTestCase(TestCase):
         offer = Offer.objects.create(name='Test Offer', created_by=user)
 
         # Create a test picture and associate it with the offer
-        picture = Picture.objects.create(image='path/to/image.jpg', offer=offer)
+        picture = Picture.objects.create(image='testFolder/image.jpg', offer=offer)
 
         # Access the dashboard view
         response = self.client.get(self.dashboard_url)
@@ -81,7 +77,7 @@ class AccountViewsTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
         # Check that the user's offers and tracked offers are passed to the template context
-        self.assertQuerysetEqual(response.context['myOffers'], [f"{{'offer': {offer}, 'image': {picture}}}"])
+        self.assertQuerysetEqual(response.context['myOffers'], [{'offer': offer,'image': Picture.objects.filter(offer=offer)[0],'which':'mine'}])
         self.assertQuerysetEqual(response.context['trackedOffers'], [])
 
     def test_edit_profile_view(self):
@@ -102,17 +98,13 @@ class AccountViewsTestCase(TestCase):
         self.assertIsInstance(response.context['form'], SignupForm)
 
         # Submit a POST request with updated form data
-        response = self.client.post(self.edit_profile_url, {
-            'username': 'newusername',
-            'password1': 'newpassword',
-            'password2': 'newpassword',
-        })
+        response = self.client.post(self.edit_profile_url, {'csrfmiddlewaretoken': ['EhudnsUkYYLzH4mxnYcl63pH6CU4BFDuznxr52VCM5evjhumoyBQeOOxfE3kyAey'], 'username': ['newuser'], 'email': ['sagasdgsa@gmail.com'], 'password1': ['nxsa0112'], 'password2': ['nxsa0112'], 'tip': ['K']})
 
         # Check that the response redirects to the dashboard page
         self.assertRedirects(response, self.dashboard_url, status_code=302, target_status_code=200)
 
         # Check that the user's profile is updated
-        self.assertEqual(CustomUser.objects.get(id=user.id).username, 'newusername')
+        self.assertEqual(User.objects.get(id=user.id).username, 'newuser')
 
     def test_logout_view(self):
         """
@@ -126,7 +118,7 @@ class AccountViewsTestCase(TestCase):
         response = self.client.get(self.logout_url)
 
         # Check that the response redirects to the index page
-        self.assertRedirects(response, reverse('search:index'), status_code=302, target_status_code=200)
+        self.assertRedirects(response,reverse('search:home'), status_code=302, target_status_code=200)
 
         # Check that the user is logged out
         self.assertFalse(response.wsgi_request.user.is_authenticated)

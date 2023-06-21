@@ -1,19 +1,23 @@
 from django.test import TestCase,Client
-from .models import User, Offer, Conversation, ConversationMessage
 from django.urls import reverse
-from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404
-from .models import Offer, Conversation
+from offer.models import Offer, Picture
+from account.models import User
+from .models import ConversationMessage,Conversation
+from search import views
 from .forms import ConversationMessageForm
 
 class ConversationModelTestCase(TestCase):
     def setUp(self):
         # Create test users for the conversation
-        self.user1 = User.objects.create(username="user1")
+        User.objects.all().delete()
+        
+        self.user1 = User.objects.create_user(username="user1")
         self.user2 = User.objects.create(username="user2")
 
         # Create a test offer for the conversation
-        self.offer = Offer.objects.create(title="Test Offer")
+        self.offer = Offer.objects.create(name="Test Offer")
+
+      
 
     def test_conversation_creation(self):
         """
@@ -105,8 +109,11 @@ class ConversationViewsTestCase(TestCase):
         """
         # Create a test user and conversations
         user = User.objects.create_user(username='testuser', password='testpassword')
+        user2 = User.objects.create_user(username='testuser2', password='testpassword2')
         conversation = Conversation.objects.create(offer=Offer.objects.create(created_by=User.objects.create_user(username='testfirm'), name='Test Offer'))
         conversation.members.add(user)
+        conversation.members.add(user2)
+
 
         # Log in the user
         self.client.force_login(user)
@@ -114,11 +121,12 @@ class ConversationViewsTestCase(TestCase):
         # Access the inbox view
         response = self.client.get(self.inbox_url)
 
+
         # Check that the response status code is 200 (OK)
         self.assertEqual(response.status_code, 200)
 
         # Check that the conversations are passed to the template context
-        self.assertQuerysetEqual(response.context['conversations'], [f"{{'conversation': {conversation}}}"])
+        self.assertQuerysetEqual(response.context['conversations'], [conversation])
 
     def test_detail_view(self):
         """

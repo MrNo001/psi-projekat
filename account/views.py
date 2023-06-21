@@ -9,6 +9,7 @@ from django.views.decorators.cache import cache_control
 from django.contrib import messages
 from .models import User
 from django.contrib.auth import login, authenticate
+from django.urls import reverse
 
 def signup(request):
     if request.method == 'POST':
@@ -70,6 +71,6 @@ def editProfile(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def logoutuser(request):
     logout(request)
-    return v.index(request)
+    return redirect(reverse("search:home"))
 
 

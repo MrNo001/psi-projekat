@@ -1,18 +1,24 @@
 from django.test import TestCase,Client
-from .models import User, Review, Offer
+from .models import Review
+from offer.models import Offer
 from django.urls import reverse
-from django.contrib.auth.models import User
-from .models import User as CustomUser, Review
-from .forms import SignupForm, RateForm
+from .forms import RateForm
+from account.forms import SignupForm
+from account.models import User
+
 
 class ReviewModelTestCase(TestCase):
     def setUp(self):
         # Create test users for the review
-        self.user = User.objects.create(username="testuser")
-        self.firm = User.objects.create(username="testfirm")
+        
+        #self.firm = User.objects.create_user(username='testFirm', password='testpassword123')
 
         # Create a test offer for the review
-        self.offer = Offer.objects.create(title="Test Offer")
+        User.objects.all().delete()
+        self.user = User.objects.create_user(username="testuser", email="test@example.com", tip="K",password="pass1")
+        self.firm = User.objects.create_user(username="testfirm", email="testfirm@example.com", tip="F",password="pass2")
+        self.offer = Offer.objects.create(name="OfferTest")
+       
 
     def test_review_creation(self):
         """
@@ -52,7 +58,7 @@ class CompanyViewsTestCase(TestCase):
         firm = User.objects.create_user(username='testfirm', password='testpassword')
         
         # Create a test review for the firm
-        review = Review.objects.create(user=user, firm=firm)
+        review = Review.objects.create(user=user, firm=firm,rate=1)
 
         # Access the plac view
         response = self.client.get(self.plac_url)
@@ -61,7 +67,7 @@ class CompanyViewsTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
         # Check that the reviews are passed to the template context
-        self.assertQuerysetEqual(response.context['reviews'], [f"{{'review': {review}}}"])
+        self.assertQuerysetEqual(response.context['reviews'], [{'review': review}])
 
     def test_rate_view(self):
         """

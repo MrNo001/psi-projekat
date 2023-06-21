@@ -1,7 +1,7 @@
 from django.test import TestCase,Client
 from .models import User, Offer, Picture
 from django.urls import reverse
-from django.contrib.auth.models import User
+from account.models import User
 from .models import Offer, Picture
 from .views import details, new, edit, delete
 
@@ -114,7 +114,9 @@ class OfferViewsTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
         # Submit a POST request to create a new offer
-        response = self.client.post(self.new_url, {'name': 'New Offer'})
+        response = self.client.post(self.new_url, {'name': 'New Offer','make':'makeUpdated','description':'descriptionUpdated',
+                                                   'model':'modelUpdated','year':1,'mileage':1,'body_type':'L','fuel_type':'B',
+                                                    'gearbox':'M','power':0,'price':200})
 
         # Check that the response redirects to the details view of the created offer
         self.assertRedirects(response, reverse('offer:details', kwargs={'pk': 1}))
@@ -142,7 +144,9 @@ class OfferViewsTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
         # Submit a POST request to edit the offer
-        response = self.client.post(self.edit_url, {'name': 'Updated Offer'})
+        response = self.client.post(self.edit_url,{'name': 'Updated Offer','make':'makeUpdated','description':'descriptionUpdated',
+                                                   'model':'modelUpdated','year':1,'mileage':1,'body_type':'L','fuel_type':'B',
+                                                    'gearbox':'M','power':0,'price':200})
 
         # Check that the response redirects to the details view of the edited offer
         self.assertRedirects(response, reverse('offer:details', kwargs={'pk': 1}))
@@ -167,7 +171,7 @@ class OfferViewsTestCase(TestCase):
         response = self.client.post(self.delete_url)
 
         # Check that the response redirects to the home page
-        self.assertRedirects(response, '/')
+        self.assertRedirects(response, '/profil/')
 
         # Check that the offer is deleted from the database
         self.assertEqual(Offer.objects.count(), 0)
