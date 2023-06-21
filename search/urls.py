@@ -10,6 +10,6 @@ urlpatterns = [
     path('', views.index, name='home'),
     path('pretraga/', views.browse, name='browse'),
     path('o-nama/', views.about, name='about'),
-    path('pretraga/report_ad/', v.report_ad, name='report_ad'),
-    path('pretraga/follow_ad/', v.follow_ad, name='follow_ad'),
+    # path('pretraga/report_ad/', v.report_ad, name='report_ad'),
+    # path('pretraga/follow_ad/', v.follow_ad, name='follow_ad'),
 ]

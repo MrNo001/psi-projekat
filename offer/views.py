@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import JsonResponse
 from .forms import NewOfferForm, EditOfferForm, FileFieldForm
 from .models import Offer, Picture
 from django.contrib import messages
@@ -25,7 +26,7 @@ def details(request, pk):
             'image': Picture.objects.filter(offer=rel_offer)[0]
         })
 
-    return render(request, 'offer/offer3.html', {
+    return render(request, 'offer/offer.html', {
         'offer': offer,
         'images': images,
         'range': range(len(images)),
@@ -82,12 +83,40 @@ def edit(request, pk):
     })
 
 @login_required
-
 def delete(request, pk):
     offer = get_object_or_404(Offer, pk=pk)#created_by=request.user
     offer.delete()
-    return redirect('/')
+    return redirect('/profil/')
+
+@login_required
+def follow_ad(request):
+    if request.method == 'POST' and 'offer_id' in request.POST:
+        offer_id = request.POST['offer_id']
+        try:
+            offer = Offer.objects.get(id=offer_id)
+            offer.subscribers.add(request.user)
+            offer.save()
+            return JsonResponse({'success': True})
+        except Offer.DoesNotExist:
+            pass
+    return JsonResponse({'success': False})
+
+@login_required
+def follow(request, pk):
+    if request.method == 'POST' and 'offer_id' in request.POST:
+        offer = get_object_or_404(Offer, pk=pk)
+        offer_id = request.POST['offer_id']
+        try:
+            offer = Offer.objects.get(id=offer_id)
+            offer.subscribers.add(request.user)
+            offer.save()
+            return JsonResponse({'success': True})
+        except Offer.DoesNotExist:
+            pass
+    return JsonResponse({'success': False})
 
 
-
+@login_required
+def unfollow(request, pk):
+    pass
 

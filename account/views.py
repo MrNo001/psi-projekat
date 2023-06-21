@@ -35,7 +35,8 @@ def dashboard(request):
     for offer in myOffers:
         myOffersPacked.append({
             'offer': offer,
-            'image': Picture.objects.filter(offer=offer)[0]
+            'image': Picture.objects.filter(offer=offer)[0],
+            'which': "mine",
         })
 
     trackedOffers = Offer.objects.filter(subscribers=request.user)
@@ -43,10 +44,11 @@ def dashboard(request):
     for offer in trackedOffers:
         trackedOffersPacked.append({
             'offer': offer,
-            'image': Picture.objects.filter(offer=offer)[0]
+            'image': Picture.objects.filter(offer=offer)[0],
+            'which': "followed",
         })
 
-    return render(request, 'account/dashboard_v2.html', {
+    return render(request, 'account/dashboard.html', {
         'myOffers': myOffersPacked,
         'trackedOffers': trackedOffersPacked,
     })
