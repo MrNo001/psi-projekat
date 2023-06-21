@@ -26,10 +26,10 @@ class Offer(models.Model):
 
 
     name = models.CharField(max_length=255)
-    description = models.TextField(blank=True, null=True)
+    description = models.TextField(max_length=500)
 
-    make = models.CharField(max_length=255)
-    model = models.CharField(max_length=255)
+    make = models.CharField(max_length=30)
+    model = models.CharField(max_length=30)
     year = models.IntegerField(default=0)
     mileage = models.IntegerField(default=0)
     body_type = models.CharField(choices=BODY_TYPES, default="L", max_length=1)
@@ -44,7 +44,6 @@ class Offer(models.Model):
     is_premium = models.BooleanField(default=False)
 
     subscribers = models.ManyToManyField(User)
-
     reported = models.BooleanField(default=False)
 
     
