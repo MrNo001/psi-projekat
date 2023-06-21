@@ -88,35 +88,37 @@ def delete(request, pk):
     offer.delete()
     return redirect('/profil/')
 
-@login_required
-def follow_ad(request):
-    if request.method == 'POST' and 'offer_id' in request.POST:
-        offer_id = request.POST['offer_id']
-        try:
-            offer = Offer.objects.get(id=offer_id)
-            offer.subscribers.add(request.user)
-            offer.save()
-            return JsonResponse({'success': True})
-        except Offer.DoesNotExist:
-            pass
-    return JsonResponse({'success': False})
 
 @login_required
 def follow(request, pk):
-    if request.method == 'POST' and 'offer_id' in request.POST:
-        offer = get_object_or_404(Offer, pk=pk)
-        offer_id = request.POST['offer_id']
+    if request.method == 'POST' or request.method == "GET":
         try:
-            offer = Offer.objects.get(id=offer_id)
+            offer = Offer.objects.get(id=pk)
             offer.subscribers.add(request.user)
             offer.save()
-            return JsonResponse({'success': True})
+            print(request.path)
+            messages.success(request, 'Uspešno ste zapratili oglas!')
+            return redirect('offer:details', pk=offer.id)
         except Offer.DoesNotExist:
-            pass
-    return JsonResponse({'success': False})
+            messages.error(request, 'Oglas ne postoji!')
+    messages.error(request, 'Došlo je do greške!')
+    return redirect('offer:details', pk=offer.id)
 
 
 @login_required
-def unfollow(request, pk):
-    pass
+def unfollow(request_origigi, pk):
+    request = request_origigi
+    request.path = '/profil/'
+    print(request)
+    if request.method == 'POST' or request.method == "GET":
+        try:
+            offer = Offer.objects.get(id=pk)
+            offer.subscribers.remove(request.user)
+            offer.save()
+            messages.success(request, 'Uspešno ste odpratili oglas!')
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+        except Offer.DoesNotExist:
+            pass
+    messages.error(request, 'Došlo je do greške!')
+    return redirect(request.META.get('HTTP_REFERER', '/'))
 

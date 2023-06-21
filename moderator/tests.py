@@ -2,13 +2,14 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from account.models import User
 from offer.models import Offer, Picture
-from .views import panel, report_ad
+from .views import panel
 
 class ModeratorViewsTestCase(TestCase):
     def setUp(self):
         self.client = Client()
         self.panel_url = reverse('moderator:panel')
         self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.userAdmin = User.objects.create_user(username='testuseradmin', password='testpassword', tip="A")
 
     def test_panel_view(self):
         """
@@ -20,6 +21,26 @@ class ModeratorViewsTestCase(TestCase):
 
         # Log in as the user
         self.client.force_login(self.user)
+
+        # Access the panel view
+        response = self.client.get(self.panel_url)
+
+        # Check that the response status code is 200 (OK)
+        self.assertEqual(response.status_code, 403)
+
+        # Check that the reported offers are passed to the template context
+        self.assertQuerysetEqual(response.context['ReportedOffers'], [{'image': Picture.objects.filter(offer=offer).first(),'offer': offer}])
+
+    def test_panel_view_admin(self):
+        """
+        Test the panel view to ensure it retrieves reported offers correctly.
+        """
+        # Create a test offer with reported=True
+        offer = Offer.objects.create(name='Test Offer', reported=True)
+        Picture.objects.create(offer=offer,image="testFolder/img.jpg")
+
+        # Log in as the user
+        self.client.force_login(self.userAdmin)
 
         # Access the panel view
         response = self.client.get(self.panel_url)

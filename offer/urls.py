@@ -12,6 +12,5 @@ urlpatterns = [
     path('<int:pk>/ukloni/', views.delete, name='delete'),
     path('<int:pk>/zaprati/', views.follow, name='follow'),
     path('<int:pk>/odprati/', views.unfollow, name='unfollow'),
-    path('follow_ad/', views.follow_ad, name='follow_ad'),
-
+    # path('follow_ad/', views.follow_ad, name='follow_ad'),
 ]
