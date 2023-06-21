@@ -55,14 +55,18 @@
                     </svg>
                     </div>
                     <div class="ml-2">
-                        <h2 class="text-lg font-semibold">Prodavac</h2>
+                        <h2 class="text-lg font-semibold">
+                            {% if offer.created_by.tip != 'F' %}
+                                Prodavac
+                            {% else %}
+                                Auto plac
+                            {% endif %}
+                        </h2>
                         <p class="text-lg text-gray-800">
                             {% if offer.created_by.tip != 'F' %}
                                 {{ offer.created_by.username }}
-
                             {% else %}
                                 <a href= "{% url 'company:plac' offer.created_by.username %}">{{ offer.created_by.username }}</a>
-
                             {% endif %}
                         </p>
                     </div>

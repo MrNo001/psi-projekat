@@ -1,5 +1,29 @@
 {# used at profile dashbaord #}
 
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+            function resolve(offerId) {
+                var currentUrl = window.location.href;
+                $.ajax({
+                    url: '/razresi/',
+                    type: 'POST',
+                    data: {
+                        'offer_id': offerId,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            window.alert("Uspesno ste razrešili oglas");
+                        }
+                    }
+                });
+            }
+    </script>
+</head>
+
+
 <div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-2xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
 
     <a href="{% url 'offer:details' card.offer.id %}">
@@ -22,7 +46,7 @@
             <button type="button" onclick="location.href='{% url 'offer:unfollow' card.offer.id %}'" class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Odprati</button>
         {% endif %}
         {% if offer.which == "reported" %}
-            <button type="button" onclick="location.href='{% url 'moderator:resolve' card.offer.id %}'" class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Okej je</button>
+            <button type="button" onclick="resolve({{ card.offer.id }})" class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Okej je</button>
             {% include 'offer/confirm_delete.html' with offer=card.offer %}
         {% endif %}
         

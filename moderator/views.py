@@ -47,27 +47,22 @@ def report(request):
             offer = Offer.objects.get(id=offer_id)
             offer.reported = True
             offer.save()
-            return redirect(request.META.get('HTTP_REFERER', '/'))
+            return JsonResponse({'success': True})
         except Offer.DoesNotExist:
             pass
-    return redirect(request.META.get('HTTP_REFERER', '/'))
+    return JsonResponse({'success': False})
 
 
 @login_required
 @admin_required
 def resolve(request):
     if request.method == 'POST' and 'offer_id' in request.POST:
-        if request.user.tip != "A":
-            messages.error("Morate biti administrator!")
-            return redirect(request.META.get('HTTP_REFERER', '/'))
         offer_id = request.POST['offer_id']
         try:
             offer = Offer.objects.get(id=offer_id)
             offer.reported = False
             offer.save()
-            messages.success("Uspesno razresenje oglasa.")
-            return redirect(request.META.get('HTTP_REFERER', '/'))
+            return JsonResponse({'success': True})
         except Offer.DoesNotExist:
             pass
-    messages.error("Neuspesno razresenje oglasa.")
-    return redirect(request.META.get('HTTP_REFERER', '/'))
+    return JsonResponse({'success': False})

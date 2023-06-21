@@ -96,13 +96,12 @@ def follow(request, pk):
             offer = Offer.objects.get(id=pk)
             offer.subscribers.add(request.user)
             offer.save()
-            print(request.path)
             messages.success(request, 'Uspešno ste zapratili oglas!')
-            return redirect('offer:details', pk=offer.id)
+            return redirect(request.META.get('HTTP_REFERER'))
         except Offer.DoesNotExist:
-            messages.error(request, 'Oglas ne postoji!')
+            pass
     messages.error(request, 'Došlo je do greške!')
-    return redirect('offer:details', pk=offer.id)
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required
@@ -116,9 +115,9 @@ def unfollow(request_origigi, pk):
             offer.subscribers.remove(request.user)
             offer.save()
             messages.success(request, 'Uspešno ste odpratili oglas!')
-            return redirect(request.META.get('HTTP_REFERER', '/'))
+            return redirect(request.META.get('HTTP_REFERER'))
         except Offer.DoesNotExist:
             pass
     messages.error(request, 'Došlo je do greške!')
-    return redirect(request.META.get('HTTP_REFERER', '/'))
+    return redirect(request.META.get('HTTP_REFERER'))
 
