@@ -6,6 +6,7 @@ from .views import panel
 
 class ModeratorViewsTestCase(TestCase):
     def setUp(self):
+        User.objects.all().delete()
         self.client = Client()
         self.panel_url = reverse('moderator:panel')
         self.user = User.objects.create_user(username='testuser', password='testpassword')
@@ -25,11 +26,9 @@ class ModeratorViewsTestCase(TestCase):
         # Access the panel view
         response = self.client.get(self.panel_url)
 
-        # Check that the response status code is 200 (OK)
+        # Check that the response status code is 403 
         self.assertEqual(response.status_code, 403)
 
-        # Check that the reported offers are passed to the template context
-        self.assertQuerysetEqual(response.context['ReportedOffers'], [{'image': Picture.objects.filter(offer=offer).first(),'offer': offer}])
 
     def test_panel_view_admin(self):
         """
@@ -49,7 +48,7 @@ class ModeratorViewsTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
         # Check that the reported offers are passed to the template context
-        self.assertQuerysetEqual(response.context['ReportedOffers'], [{'image': Picture.objects.filter(offer=offer).first(),'offer': offer}])
+        self.assertQuerysetEqual(response.context['ReportedOffers'], [{'image': Picture.objects.filter(offer=offer).first(),'offer': offer,'which':'reported'}])
 
 ''' def test_report_ad_view(self):
         """
