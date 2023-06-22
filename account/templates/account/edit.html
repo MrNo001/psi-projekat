@@ -6,7 +6,6 @@
 
 
 <div class="w-1/2 my-6 mx-auto p-6 bg-gray-100 rounded-xl">
-  {% include 'messages.html' %}
   <form method="POST">
     {% csrf_token %}
     {{form.as_p}}
